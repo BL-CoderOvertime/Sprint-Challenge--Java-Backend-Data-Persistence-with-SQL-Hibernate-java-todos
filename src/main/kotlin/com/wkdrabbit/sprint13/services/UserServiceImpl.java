@@ -4,6 +4,7 @@ package com.wkdrabbit.sprint13.services;
 import com.wkdrabbit.sprint13.models.User;
 import com.wkdrabbit.sprint13.models.UserRoles;
 import com.wkdrabbit.sprint13.repository.RoleRepository;
+import com.wkdrabbit.sprint13.repository.ToDoRepository;
 import com.wkdrabbit.sprint13.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,6 +29,9 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
     @Autowired
     private RoleRepository rolerepos;
+
+    @Autowired
+    private ToDoRepository todorepos;
 
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException

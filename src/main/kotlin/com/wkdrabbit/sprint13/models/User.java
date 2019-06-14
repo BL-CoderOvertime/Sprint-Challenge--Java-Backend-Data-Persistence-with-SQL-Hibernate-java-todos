@@ -34,6 +34,7 @@ public class User extends Auditable
     @JsonIgnoreProperties("user")
     private List<UserRoles> userRoles = new ArrayList<>();
 
+
     public User()
     {
     }
@@ -108,7 +109,4 @@ public class User extends Auditable
         return rtnList;
     }
 
-    public List getToDos() {
-        return null;
-    }
 }

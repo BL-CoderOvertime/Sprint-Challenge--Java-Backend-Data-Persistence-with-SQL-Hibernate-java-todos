@@ -3,6 +3,8 @@ package com.wkdrabbit.sprint13.controllers;
 
 
 
+import com.sun.xml.bind.v2.TODO;
+import com.wkdrabbit.sprint13.models.ToDo;
 import com.wkdrabbit.sprint13.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +29,7 @@ public class UserController
     private com.wkdrabbit.sprint13.services.UserService userService;
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value = "/users", produces = {"application/json"})
+    @GetMapping(value = "/users/mine", produces = {"application/json"})
     public ResponseEntity<?> listAllUsers()
     {
         List<User> myUsers = userService.findAll();
@@ -69,6 +71,24 @@ public class UserController
 
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
+
+    @PostMapping(value = "/users/todo/{userid}", consumes = {"application/json"}, produces = {"application/json"})
+    public ResponseEntity<?> addNewToDo(@Valid @RequestBody ToDo newtodo, @PathVariable Long userid) throws URISyntaxException
+    {
+        newtodo = todoService.save(newtodo, userid);
+
+        // set the location header for the newly created resource
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newUserURI = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/todo/{userid}")
+                .buildAndExpand(newtodo.getId())
+                .toUri();
+        responseHeaders.setLocation(newUserURI);
+
+        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+    }
+
 
 
     @PutMapping(value = "/user/{id}")
