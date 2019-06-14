@@ -28,6 +28,9 @@ public class UserController
     @Autowired
     private com.wkdrabbit.sprint13.services.UserService userService;
 
+    @Autowired
+    private com.wkdrabbit.sprint13.services.ToDoService todoService;
+
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/users/mine", produces = {"application/json"})
     public ResponseEntity<?> listAllUsers()
@@ -75,14 +78,15 @@ public class UserController
     @PostMapping(value = "/users/todo/{userid}", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> addNewToDo(@Valid @RequestBody ToDo newtodo, @PathVariable Long userid) throws URISyntaxException
     {
-        newtodo = todoService.save(newtodo, userid);
+        newtodo.setUser(userService.findUserById(userid));
+        newtodo = todoService.save(newtodo);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newUserURI = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/todo/{userid}")
-                .buildAndExpand(newtodo.getId())
+                .buildAndExpand(newtodo.getTodoid())
                 .toUri();
         responseHeaders.setLocation(newUserURI);
 

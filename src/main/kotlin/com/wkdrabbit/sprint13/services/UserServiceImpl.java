@@ -1,6 +1,7 @@
 package com.wkdrabbit.sprint13.services;
 
 
+import com.wkdrabbit.sprint13.models.ToDo;
 import com.wkdrabbit.sprint13.models.User;
 import com.wkdrabbit.sprint13.models.UserRoles;
 import com.wkdrabbit.sprint13.repository.RoleRepository;
@@ -84,6 +85,13 @@ public class UserServiceImpl implements UserDetailsService, UserService
             newRoles.add(new UserRoles(newUser, ur.getRole()));
         }
         newUser.setUserRoles(newRoles);
+
+        ArrayList<ToDo> newToDos = new ArrayList<>();
+        for (ToDo todo : user.getToDos())
+        {
+            newToDos.add(new ToDo(todo.getDescription(),  todo.getDatestarted(), todo.getUser()));
+        }
+        newUser.setToDos(newToDos);
 
         return userrepos.save(newUser);
     }

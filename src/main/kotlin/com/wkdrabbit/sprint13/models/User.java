@@ -2,6 +2,9 @@ package com.wkdrabbit.sprint13.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.wkdrabbit.sprint13.repository.ToDoRepository;
+import com.wkdrabbit.sprint13.services.TodoServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -33,6 +36,11 @@ public class User extends Auditable
                cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private List<UserRoles> userRoles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
+    private List<ToDo> ToDos = new ArrayList<>();
 
 
     public User()
@@ -109,4 +117,11 @@ public class User extends Auditable
         return rtnList;
     }
 
+    public List<ToDo> getToDos() {
+        return ToDos;
+    }
+
+    public void setToDos(List<ToDo> toDos) {
+        ToDos = toDos;
+    }
 }
