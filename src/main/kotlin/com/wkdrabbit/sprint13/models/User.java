@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 // User is considered the parent entity
@@ -105,5 +106,9 @@ public class User extends Auditable
         }
 
         return rtnList;
+    }
+
+    public List getToDos() {
+        return null;
     }
 }
