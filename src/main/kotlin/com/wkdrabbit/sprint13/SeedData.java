@@ -1,18 +1,37 @@
+package com.wkdrabbit.sprint13;
+
+
+import com.wkdrabbit.sprint13.models.Role;
+import com.wkdrabbit.sprint13.models.ToDo;
+import com.wkdrabbit.sprint13.models.User;
+import com.wkdrabbit.sprint13.models.UserRoles;
+import com.wkdrabbit.sprint13.repository.RoleRepository;
+import com.wkdrabbit.sprint13.repository.ToDoRepository;
+import com.wkdrabbit.sprint13.repository.UserRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+
 @Transactional
 @Component
-public class SeedData implements CommandLineRunner {
+public class SeedData implements CommandLineRunner
+{
     RoleRepository rolerepos;
     UserRepository userrepos;
     ToDoRepository todorepos;
 
-    public SeedData(RoleRepository rolerepos, UserRepository userrepos, ToDoRepository todorepos) {
+    public SeedData(RoleRepository rolerepos, UserRepository userrepos, ToDoRepository todorepos)
+    {
         this.rolerepos = rolerepos;
         this.userrepos = userrepos;
-        this.todorepos = todorepos
+        this.todorepos = todorepos;
     }
 
     @Override
-    public void run(String[] args) throws Exception {
+    public void run(String[] args) throws Exception
+    {
         Role r1 = new Role("admin");
         Role r2 = new Role("user");
 
